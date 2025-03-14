@@ -16,7 +16,6 @@ export const AuthProvider = ({ children }) => {
             setUser(user);
             setIsLoggedIn(!!user);
         });
-
         return () => unsubscribe();
     }, []);
 
