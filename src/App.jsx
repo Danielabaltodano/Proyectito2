@@ -6,6 +6,18 @@ import Encabezado from "./components/Encabezado";
 import Inicio from "./Views/Inicio";
 import Categorias from "./Views/Categorias"; 
 
+
+
+
+
+
+
+
+
+
+
+
+
 import "./App.css";
 
 
