@@ -4,8 +4,12 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 import Login from './Views/Login';
 import Encabezado from "./Components/Encabezado";
 import Inicio from "./Views/Inicio";
+import Categorias from "./Views/Categorias"; 
 
 import "./App.css";
+
+
+
 
 function App() {
 
@@ -20,6 +24,7 @@ function App() {
                 
                 <Route path="/" element={<Login />} />
                 <Route path="/inicio" element={<ProtectedRoute element={<Inicio />} />} />
+                <Route path="/categorias" element={<ProtectedRoute element={<Categorias />} />}/> //Ruta de Categorias protegida
 
               </Routes>
             </main>
@@ -29,5 +34,6 @@ function App() {
     </>
   )
 }
+
 
 export default App
