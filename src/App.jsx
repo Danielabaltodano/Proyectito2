@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./database/authcontext";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Login from './Views/Login';
-import Encabezado from "./components/Encabezado";
+import Encabezado from "./Components/Encabezado";
 import Inicio from "./Views/Inicio";
 import Categorias from "./Views/Categorias"; 
 
