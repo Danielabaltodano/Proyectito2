@@ -5,8 +5,7 @@ import Login from './Views/Login';
 import Encabezado from "./Components/Encabezado";
 import Inicio from "./Views/Inicio";
 import Categorias from "./Views/Categorias"; 
-
-
+import Productos from "./Views/Productos";
 
 
 
@@ -14,30 +13,22 @@ import "./App.css";
 
 
 
-
 function App() {
-
   return (
-    <>
-      <AuthProvider>
-        <Router>
-          <div className="App">
-            <Encabezado />
-            <main>
-              <Routes>
-                
-                <Route path="/" element={<Login />} />
-                <Route path="/inicio" element={<ProtectedRoute element={<Inicio />} />} />
-                <Route path="/categorias" element={<ProtectedRoute element={<Categorias />} />}/> //Ruta de Categorias protegida
-
-              </Routes>
-            </main>
-          </div>
-        </Router>
-      </AuthProvider>
-    </>
+    <AuthProvider>
+      <Router>
+          <Encabezado />
+          <main className="margen-superior-main">
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route path="/inicio" element={<ProtectedRoute element={<Inicio />} />} />
+              <Route path="/categorias" element={<ProtectedRoute element={<Categorias />} />}/>
+              <Route path="/productos" element={<ProtectedRoute element={<Productos />} />}/>
+            </Routes>
+          </main>
+      </Router>
+    </AuthProvider>
   )
 }
 
-
-export default App
+export default App;
