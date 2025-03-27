@@ -17,6 +17,7 @@ import ModalEliminacionProducto from "../Components/productos/ModalEliminacionPr
 
 const Productos = () => {
   // Estados para manejo de datos
+  
   const [productos, setProductos] = useState([]);
   const [categorias, setCategorias] = useState([]);
   const [showModal, setShowModal] = useState(false);
