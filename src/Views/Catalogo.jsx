@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Form, Col } from "react-bootstrap";
 import { db } from "../database/firebaseconfig";
 import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
-import TarjetaProducto from "../components/catalogo/TarjetaProducto";
+import TarjetaProducto from "../Components/catalogo/TarjetaProducto";
 import ModalEdicionProducto from "../Components/productos/ModalEdicionProducto";
 
 const Catalogo = () => {
