@@ -79,6 +79,13 @@ const Encabezado = () => {
                 <strong>Catalogo</strong>
               </Nav.Link>
 
+
+               {/* Nueva opción de navegación: Libros */}
+               <Nav.Link onClick={() => handleNavigate("/Libros")} className={isCollapsed ? "color-texto-marca" : "text-white"}>
+                {isCollapsed ? <i className="bi bi-box-seam-fill me-2"></i> : null}
+                <strong>Libros</strong>
+              </Nav.Link>
+
               {isLoggedIn ? (
                 <Nav.Link onClick={handleLogout} className={isCollapsed ? "text-black" : "text-white"}>
                   Cerrar Sesión
