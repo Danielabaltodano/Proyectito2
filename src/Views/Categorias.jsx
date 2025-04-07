@@ -17,7 +17,7 @@ import ModalRegistroCategoria from "../Components/categorias/ModalRegistroCatego
 import ModalEdicionCategoria from "../Components/categorias/ModalEdicionCategoria";
 import ModalEliminacionCategoria from "../Components/categorias/ModalEliminacionCategoria";
 import CuadroBusqueda from "../Components/Busquedas/Cuadrobusquedas";
-import Paginacion from "..Components/ordenamiento/Paginacion"; // ✅ NUEVO
+import Paginacion from "../Components/ordenamiento/Paginacion"; // ✅ NUEVO
 
 const Categorias = () => {
   // Estados para manejo de datos
