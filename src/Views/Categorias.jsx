@@ -13,9 +13,9 @@ import {
 
 // Importaciones de componentes personalizados
 import TablaCategorias from "../Components/categorias/TablaCategorias";
-import ModalRegistroCategoria from "../components/categorias/ModalRegistroCategoria";
-import ModalEdicionCategoria from "../components/categorias/ModalEdicionCategoria";
-import ModalEliminacionCategoria from "../components/categorias/ModalEliminacionCategoria";
+import ModalRegistroCategoria from "../Components/categorias/ModalRegistroCategoria";
+import ModalEdicionCategoria from "../Components/categorias/ModalEdicionCategoria";
+import ModalEliminacionCategoria from "../Components/categorias/ModalEliminacionCategoria";
 import CuadroBusqueda from "../Components/Busquedas/Cuadrobusquedas";
 
 const Categorias = () => {
