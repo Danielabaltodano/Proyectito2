@@ -2,14 +2,22 @@ import React, { useState, useEffect } from "react";
 import { Container, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { db, storage } from "../database/firebaseconfig";
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
-import TablaLibros from "../Components/libros/TablaLibros";
-import ModalRegistroLibro from "../Components/libros/ModalRegistroLibro";
-import ModalEdicionLibro from "../Components/libros/ModalEdicionLibro";
-import ModalEliminacionLibro from "../Components/libros/ModalEliminacionLibro";
-import CuadroBusqueda from "../Components/Busquedas/Cuadrobusquedas"; // AÑADIDO
+import TablaLibros from "../components/libros/TablaLibros";
+import ModalRegistroLibro from "../components/libros/ModalRegistroLibro";
+import ModalEdicionLibro from "../components/libros/ModalEdicionLibro";
+import ModalEliminacionLibro from "../components/libros/ModalEliminacionLibro";
 import { useAuth } from "../database/authcontext";
+import CuadroBusqueda from "../Components/Busquedas/Cuadrobusquedas";
+import Paginacion from "../Components/ordenamiento/Paginacion"; // ✅ Paginación
 
 const Libros = () => {
   const [libros, setLibros] = useState([]);
@@ -26,7 +34,10 @@ const Libros = () => {
   const [libroAEliminar, setLibroAEliminar] = useState(null);
   const [pdfFile, setPdfFile] = useState(null);
   const [error, setError] = useState(null);
-  const [searchText, setSearchText] = useState(""); // AÑADIDO
+  const [searchText, setSearchText] = useState("");
+
+  const [currentPage, setCurrentPage] = useState(1); // ✅ Paginación
+  const itemsPerPage = 5; // ✅ Paginación
 
   const { isLoggedIn } = useAuth();
   const navigate = useNavigate();
@@ -193,6 +204,21 @@ const Libros = () => {
     setSearchText(e.target.value.toLowerCase());
   };
 
+  // ✅ Filtro + Paginación
+  const librosFiltrados = searchText
+    ? libros.filter(
+        (libro) =>
+          libro.nombre.toLowerCase().includes(searchText) ||
+          libro.autor.toLowerCase().includes(searchText) ||
+          libro.genero.toLowerCase().includes(searchText)
+      )
+    : libros;
+
+  const paginatedLibros = librosFiltrados.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   return (
     <Container className="mt-5">
       <br />
@@ -203,24 +229,22 @@ const Libros = () => {
         Agregar libro
       </Button>
 
-      <CuadroBusqueda // AÑADIDO
+      <CuadroBusqueda
         searchText={searchText}
         handleSearchChange={handleSearchChange}
       />
 
       <TablaLibros
-        libros={
-          searchText
-            ? libros.filter(
-                (libro) =>
-                  libro.nombre.toLowerCase().includes(searchText) ||
-                  libro.autor.toLowerCase().includes(searchText) ||
-                  libro.genero.toLowerCase().includes(searchText)
-              )
-            : libros
-        }
+        libros={paginatedLibros}
         openEditModal={openEditModal}
         openDeleteModal={openDeleteModal}
+      />
+
+      <Paginacion
+        itemsPerPage={itemsPerPage}
+        totalItems={librosFiltrados.length}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
       />
 
       <ModalRegistroLibro
