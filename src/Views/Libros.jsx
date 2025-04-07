@@ -11,10 +11,10 @@ import {
   doc,
 } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
-import TablaLibros from "../components/libros/TablaLibros";
-import ModalRegistroLibro from "../components/libros/ModalRegistroLibro";
-import ModalEdicionLibro from "../components/libros/ModalEdicionLibro";
-import ModalEliminacionLibro from "../components/libros/ModalEliminacionLibro";
+import TablaLibros from "../Components/libros/TablaLibros";
+import ModalRegistroLibro from "../Components/libros/ModalRegistroLibro";
+import ModalEdicionLibro from "../Components/libros/ModalEdicionLibro";
+import ModalEliminacionLibro from "../Components/libros/ModalEliminacionLibro";
 import { useAuth } from "../database/authcontext";
 import CuadroBusqueda from "../Components/Busquedas/Cuadrobusquedas";
 import Paginacion from "../Components/ordenamiento/Paginacion"; // ✅ Paginación

@@ -10,10 +10,10 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
-import TablaProductos from "../components/productos/TablaProductos";
-import ModalRegistroProducto from "../components/productos/ModalRegistroProducto";
-import ModalEdicionProducto from "../components/productos/ModalEdicionProducto";
-import ModalEliminacionProducto from "../components/productos/ModalEliminacionProducto";
+import TablaProductos from "../Components/productos/TablaProductos";
+import ModalRegistroProducto from "../Components/productos/ModalRegistroProducto";
+import ModalEdicionProducto from "../Components/productos/ModalEdicionProducto";
+import ModalEliminacionProducto from "../Components/productos/ModalEliminacionProducto";
 import CuadroBusqueda from "../Components/Busquedas/Cuadrobusquedas";
 import Paginacion from "../Components/ordenamiento/Paginacion"; // ✅ NUEVO
 

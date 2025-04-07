@@ -12,12 +12,12 @@ import {
 } from "firebase/firestore";
 
 // Importaciones de componentes personalizados
-import TablaCategorias from "../components/categorias/TablaCategorias";
-import ModalRegistroCategoria from "../components/categorias/ModalRegistroCategoria";
-import ModalEdicionCategoria from "../components/categorias/ModalEdicionCategoria";
-import ModalEliminacionCategoria from "../components/categorias/ModalEliminacionCategoria";
+import TablaCategorias from "../Components/categorias/TablaCategorias";
+import ModalRegistroCategoria from "../Components/categorias/ModalRegistroCategoria";
+import ModalEdicionCategoria from "../Components/categorias/ModalEdicionCategoria";
+import ModalEliminacionCategoria from "../Components/categorias/ModalEliminacionCategoria";
 import CuadroBusqueda from "../Components/Busquedas/Cuadrobusquedas";
-import Paginacion from "../Components/ordenamiento/Paginacion"; // ✅ NUEVO
+import Paginacion from "..Components/ordenamiento/Paginacion"; // ✅ NUEVO
 
 const Categorias = () => {
   // Estados para manejo de datos
