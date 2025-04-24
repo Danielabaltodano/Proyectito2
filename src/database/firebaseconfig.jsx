@@ -1,30 +1,39 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
+import { initializeFirestore, persistentLocalCache } from "firebase/firestore";
 
-// Configuración de Firebase usando variables de entorno
+// Configuración de Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyBplIlFUaAbeIwxeOnKEFXtyByeaWSTzg4",
-  authDomain: "proyectito2-9914d.firebaseapp.com",
-  projectId: "proyectito2-9914d",
-  storageBucket: "proyectito2-9914d.firebasestorage.app",
-  messagingSenderId: "641141473251",
-  appId: "1:641141473251:web:3d84412e76c233c9e7ead6",
-  measurementId: "G-8YRLR7MCGR"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 // Inicializa Firebase
 const appfirebase = initializeApp(firebaseConfig);
 
-// Inicializa Firestore
-const db = getFirestore(appfirebase);
+// Inicializa Firestore con persistencia local
+let db;
+try {
+  db = initializeFirestore(appfirebase, {
+    localCache: persistentLocalCache({
+      cacheSizeBytes: 100 * 1024 * 1024,
+    }),
+  });
+  console.log("Firestore inicializado con persistencia offline.");
+} catch (error) {
+  console.error("Error al inicializar Firestore con persistencia:", error);
+  // Fallback
+  db = initializeFirestore(appfirebase, {});
+}
 
-// Inicializa Authentication
+// Inicializa Authentication y Storage
 const auth = getAuth(appfirebase);
-
-// Inicializa Storage
 const storage = getStorage(appfirebase);
 
-// Exportación única al final del archivo
 export { appfirebase, db, auth, storage };
