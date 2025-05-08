@@ -4,9 +4,10 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Offcanvas from "react-bootstrap/Offcanvas";
-import logo from "../assets/react.svg";
+import logo from '../assets/LogoMimon.png';
 import { useAuth } from "../database/authcontext";
 import 'bootstrap-icons/font/bootstrap-icons.css';
+
 import "../App.css";
 
 const Encabezado = () => {
@@ -90,6 +91,12 @@ const Encabezado = () => {
                <Nav.Link onClick={() => handleNavigate("/Clima")} className={isCollapsed ? "color-texto-marca" : "text-white"}>
                 {isCollapsed ? <i className="bi bi-box-seam-fill me-2"></i> : null}
                 <strong>Clima</strong>
+              </Nav.Link>
+
+               {/* Nueva opción de navegación: Pronunciacion */}
+               <Nav.Link onClick={() => handleNavigate("/Pronunciacion")} className={isCollapsed ? "color-texto-marca" : "text-white"}>
+                {isCollapsed ? <i className="bi bi-box-seam-fill me-2"></i> : null}
+                <strong>Pronunciacion</strong>
               </Nav.Link>
 
               {isLoggedIn ? (
