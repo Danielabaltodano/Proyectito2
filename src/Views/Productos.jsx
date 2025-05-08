@@ -9,13 +9,14 @@ import {
   updateDoc,
   deleteDoc,
   doc,
+  onSnapshot,
 } from "firebase/firestore";
 import TablaProductos from "../Components/productos/TablaProductos";
 import ModalRegistroProducto from "../Components/productos/ModalRegistroProducto";
 import ModalEdicionProducto from "../Components/productos/ModalEdicionProducto";
 import ModalEliminacionProducto from "../Components/productos/ModalEliminacionProducto";
 import CuadroBusqueda from "../Components/Busquedas/Cuadrobusquedas";
-import Paginacion from "../Components/ordenamiento/Paginacion"; // ✅ NUEVO
+import Paginacion from "../Components/ordenamiento/Paginacion";
 
 // Componente principal
 const Productos = () => {
