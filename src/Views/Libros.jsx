@@ -1,3 +1,4 @@
+// src/views/Libros.jsx
 import React, { useState, useEffect } from "react";
 import { Container, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -10,14 +11,20 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from "firebase/storage";
 import TablaLibros from "../Components/libros/TablaLibros";
 import ModalRegistroLibro from "../Components/libros/ModalRegistroLibro";
 import ModalEdicionLibro from "../Components/libros/ModalEdicionLibro";
 import ModalEliminacionLibro from "../Components/libros/ModalEliminacionLibro";
 import { useAuth } from "../database/authcontext";
 import CuadroBusqueda from "../Components/Busquedas/Cuadrobusquedas";
-import Paginacion from "../Components/ordenamiento/Paginacion"; // ✅ Paginación
+import Paginacion from "../Components/ordenamiento/Paginacion";
+import ModalQR from "../Components/qr/ModalQR";
 
 const Libros = () => {
   const [libros, setLibros] = useState([]);
@@ -36,8 +43,23 @@ const Libros = () => {
   const [error, setError] = useState(null);
   const [searchText, setSearchText] = useState("");
 
-  const [currentPage, setCurrentPage] = useState(1); // ✅ Paginación
-  const itemsPerPage = 5; // ✅ Paginación
+  const [showQRModal, setShowQRModal] = useState(false);
+  const [currentUrl, setCurrentUrl] = useState("");
+
+  const openQRModal = (url) => {
+    setCurrentUrl(url);
+    setShowQRModal(true);
+  };
+
+  const closeQRModal = () => setShowQRModal(false);
+
+  const handleCopy = (texto) => {
+    navigator.clipboard.writeText(texto);
+    alert("Copiado al portapapeles: " + texto);
+  };
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   const { isLoggedIn } = useAuth();
   const navigate = useNavigate();
@@ -204,7 +226,6 @@ const Libros = () => {
     setSearchText(e.target.value.toLowerCase());
   };
 
-  // ✅ Filtro + Paginación
   const librosFiltrados = searchText
     ? libros.filter(
         (libro) =>
@@ -238,6 +259,8 @@ const Libros = () => {
         libros={paginatedLibros}
         openEditModal={openEditModal}
         openDeleteModal={openDeleteModal}
+        openQRModal={openQRModal}
+        handleCopy={handleCopy}
       />
 
       <Paginacion
@@ -267,6 +290,12 @@ const Libros = () => {
         showDeleteModal={showDeleteModal}
         setShowDeleteModal={setShowDeleteModal}
         handleDeleteLibro={handleDeleteLibro}
+      />
+
+      <ModalQR
+        show={showQRModal}
+        handleClose={closeQRModal}
+        url={currentUrl}
       />
     </Container>
   );

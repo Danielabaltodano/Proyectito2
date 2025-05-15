@@ -1,8 +1,9 @@
+// src/Components/libros/TablaLibros.jsx
 import React from "react";
 import { Table, Button } from "react-bootstrap";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-const TablaLibros = ({ libros, openEditModal, openDeleteModal }) => {
+const TablaLibros = ({ libros, openEditModal, openDeleteModal, openQRModal, handleCopy }) => {
   return (
     <Table striped bordered hover responsive>
       <thead>
@@ -22,12 +23,30 @@ const TablaLibros = ({ libros, openEditModal, openDeleteModal }) => {
             <td>{libro.genero}</td>
             <td>
               {libro.pdfUrl && (
-                <a href={libro.pdfUrl} target="_blank" rel="noopener noreferrer">
-                  Ver PDF
-                </a>
+                <>
+                  <a href={libro.pdfUrl} target="_blank" rel="noopener noreferrer">
+                    Ver PDF
+                  </a>
+                  <Button
+                    variant="outline-dark"
+                    size="sm"
+                    className="ms-2"
+                    onClick={() => openQRModal(libro.pdfUrl)}
+                  >
+                    <i className="bi bi-qr-code"></i>
+                  </Button>
+                </>
               )}
             </td>
             <td>
+              <Button
+                variant="outline-success"
+                size="sm"
+                className="me-2"
+                onClick={() => handleCopy(libro.nombre)}
+              >
+                <i className="bi bi-clipboard"></i>
+              </Button>
               <Button
                 variant="outline-warning"
                 size="sm"
