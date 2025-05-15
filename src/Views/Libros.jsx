@@ -20,7 +20,7 @@ import TablaLibros from "../Components/libros/TablaLibros";
 import ModalRegistroLibro from "../Components/libros/ModalRegistroLibro";
 import ModalEdicionLibro from "../Components/libros/ModalEdicionLibro";
 import ModalEliminacionLibro from "../Components/libros/ModalEliminacionLibro";
-import ModalQR from "../components/qr/ModalQR";
+import ModalQR from "../Components/qr/ModalQR";
 import { useAuth } from "../database/authcontext";
 import CuadroBusqueda from "../Components/Busquedas/Cuadrobusquedas";
 import Paginacion from "../Components/ordenamiento/Paginacion";
