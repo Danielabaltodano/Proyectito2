@@ -30,10 +30,10 @@ const Catalogo = () => {
       .writeText(rowData)
       .then(() => {
         console.log("Datos copiados al portapapeles:\n" + rowData);
-        alert("\u2705 Datos copiados al portapapeles.");
+        alert("✅ Datos copiados al portapapeles.");
       })
       .catch((err) => {
-        console.error("\u274C Error al copiar al portapapeles:", err);
+        console.error("❌ Error al copiar al portapapeles:", err);
       });
   };
 
