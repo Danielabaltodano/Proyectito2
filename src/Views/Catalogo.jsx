@@ -4,24 +4,44 @@ import { db } from "../database/firebaseconfig";
 import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
 import TarjetaProducto from "../Components/catalogo/TarjetaProducto";
 import ModalEdicionProducto from "../Components/productos/ModalEdicionProducto";
+import ModalQRProducto from "../Components/catalogo/ModalQRProducto";
 
 const Catalogo = () => {
   const [productos, setProductos] = useState([]);
   const [categorias, setCategorias] = useState([]);
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Todas");
 
-  // Estados para la edición de productos
   const [showEditModal, setShowEditModal] = useState(false);
   const [productoEditado, setProductoEditado] = useState(null);
 
-  // Referencias a colecciones de Firestore
+  const [showQRModal, setShowQRModal] = useState(false);
+  const [productoQR, setProductoQR] = useState(null);
+
+  const openQRModal = (producto) => {
+    setProductoQR(producto);
+    setShowQRModal(true);
+  };
+
+  const closeQRModal = () => setShowQRModal(false);
+
+  const handleCopy = (producto) => {
+    const rowData = `Nombre: ${producto.nombre}\nPrecio: C$${producto.precio}\nCategoría: ${producto.categoria}`;
+    navigator.clipboard
+      .writeText(rowData)
+      .then(() => {
+        console.log("Datos copiados al portapapeles:\n" + rowData);
+        alert("\u2705 Datos copiados al portapapeles.");
+      })
+      .catch((err) => {
+        console.error("\u274C Error al copiar al portapapeles:", err);
+      });
+  };
+
   const productosCollection = collection(db, "productos");
   const categoriasCollection = collection(db, "categorias");
 
-  // Función para cargar datos
   const fetchData = async () => {
     try {
-      // Obtener productos
       const productosData = await getDocs(productosCollection);
       const fetchedProductos = productosData.docs.map((doc) => ({
         ...doc.data(),
@@ -29,7 +49,6 @@ const Catalogo = () => {
       }));
       setProductos(fetchedProductos);
 
-      // Obtener categorías
       const categoriasData = await getDocs(categoriasCollection);
       const fetchedCategorias = categoriasData.docs.map((doc) => ({
         ...doc.data(),
@@ -44,8 +63,6 @@ const Catalogo = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
-  // ---------------- LÓGICA DE EDICIÓN ----------------
 
   const openEditModal = (producto) => {
     setProductoEditado({ ...producto });
@@ -69,11 +86,7 @@ const Catalogo = () => {
   };
 
   const handleEditProducto = async () => {
-    if (
-      !productoEditado.nombre ||
-      !productoEditado.precio ||
-      !productoEditado.categoria
-    ) {
+    if (!productoEditado.nombre || !productoEditado.precio || !productoEditado.categoria) {
       alert("Por favor, completa todos los campos requeridos.");
       return;
     }
@@ -82,27 +95,22 @@ const Catalogo = () => {
       await updateDoc(productoRef, productoEditado);
       setShowEditModal(false);
       setProductoEditado(null);
-      fetchData(); // Recargar productos
+      fetchData();
     } catch (error) {
       console.error("Error al actualizar producto:", error);
     }
   };
 
-  // ---------------- FILTRADO ----------------
-
   const productosFiltrados =
     categoriaSeleccionada === "Todas"
       ? productos
-      : productos.filter(
-          (producto) => producto.categoria === categoriaSeleccionada
-        );
+      : productos.filter((producto) => producto.categoria === categoriaSeleccionada);
 
   return (
     <Container className="mt-5">
       <br />
       <h4>Catálogo de Productos</h4>
 
-      {/* Filtro por categoría */}
       <Row>
         <Col lg={3} md={3} sm={6}>
           <Form.Group className="mb-3">
@@ -122,7 +130,6 @@ const Catalogo = () => {
         </Col>
       </Row>
 
-      {/* Modal de edición */}
       <ModalEdicionProducto
         showEditModal={showEditModal}
         setShowEditModal={setShowEditModal}
@@ -133,20 +140,27 @@ const Catalogo = () => {
         categorias={categorias}
       />
 
-      {/* Tarjetas de productos */}
       <Row>
         {productosFiltrados.length > 0 ? (
           productosFiltrados.map((producto) => (
             <TarjetaProducto
               key={producto.id}
               producto={producto}
-              openEditModal={openEditModal} // 👈 le pasamos la función al hijo
+              openEditModal={openEditModal}
+              openQRModal={openQRModal}
+              handleCopy={handleCopy}
             />
           ))
         ) : (
           <p>No hay productos en esta categoría.</p>
         )}
       </Row>
+
+      <ModalQRProducto
+        show={showQRModal}
+        handleClose={closeQRModal}
+        producto={productoQR}
+      />
     </Container>
   );
 };

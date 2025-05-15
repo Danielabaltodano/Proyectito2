@@ -1,6 +1,9 @@
+// src/Components/catalogo/TarjetaProducto.jsx
+import React from "react";
 import { Card, Col, Button } from "react-bootstrap";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
-const TarjetaProducto = ({ producto, openEditModal }) => {
+const TarjetaProducto = ({ producto, openEditModal, openQRModal, handleCopy }) => {
   return (
     <Col lg={3} md={4} sm={12} className="mb-4">
       <Card className="h-100">
@@ -22,15 +25,27 @@ const TarjetaProducto = ({ producto, openEditModal }) => {
             Precio: C${producto.precio} <br />
             Categoría: {producto.categoria}
           </Card.Text>
-          
-          {/* Botón Editar */}
-          <Button
-            variant="outline-primary"
-            className="mt-auto"
-            onClick={() => openEditModal(producto)}
-          >
-            Editar
-          </Button>
+
+          <div className="d-flex justify-content-between mt-auto">
+            <Button
+              variant="outline-primary"
+              onClick={() => openEditModal(producto)}
+            >
+              Editar
+            </Button>
+            <Button
+              variant="outline-dark"
+              onClick={() => openQRModal(producto)}
+            >
+              <i className="bi bi-qr-code"></i>
+            </Button>
+            <Button
+              variant="outline-success"
+              onClick={() => handleCopy(producto)}
+            >
+              <i className="bi bi-clipboard"></i>
+            </Button>
+          </div>
         </Card.Body>
       </Card>
     </Col>

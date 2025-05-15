@@ -1,4 +1,3 @@
-// src/views/Libros.jsx
 import React, { useState, useEffect } from "react";
 import { Container, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -17,14 +16,14 @@ import {
   getDownloadURL,
   deleteObject,
 } from "firebase/storage";
-import TablaLibros from "../Components/libros/TablaLibros";
-import ModalRegistroLibro from "../Components/libros/ModalRegistroLibro";
-import ModalEdicionLibro from "../Components/libros/ModalEdicionLibro";
-import ModalEliminacionLibro from "../Components/libros/ModalEliminacionLibro";
+import TablaLibros from "../components/libros/TablaLibros";
+import ModalRegistroLibro from "../components/libros/ModalRegistroLibro";
+import ModalEdicionLibro from "../components/libros/ModalEdicionLibro";
+import ModalEliminacionLibro from "../components/libros/ModalEliminacionLibro";
+import ModalQR from "../components/qr/ModalQR";
 import { useAuth } from "../database/authcontext";
 import CuadroBusqueda from "../Components/Busquedas/Cuadrobusquedas";
-import Paginacion from "../Components/ordenamiento/Paginacion";
-import ModalQR from "../Components/qr/ModalQR";
+import Paginacion from "../components/ordenamiento/Paginacion";
 
 const Libros = () => {
   const [libros, setLibros] = useState([]);
@@ -43,27 +42,14 @@ const Libros = () => {
   const [error, setError] = useState(null);
   const [searchText, setSearchText] = useState("");
 
-  const [showQRModal, setShowQRModal] = useState(false);
-  const [currentUrl, setCurrentUrl] = useState("");
-
-  const openQRModal = (url) => {
-    setCurrentUrl(url);
-    setShowQRModal(true);
-  };
-
-  const closeQRModal = () => setShowQRModal(false);
-
-  const handleCopy = (texto) => {
-    navigator.clipboard.writeText(texto);
-    alert("Copiado al portapapeles: " + texto);
-  };
-
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
+  const [showQRModal, setShowQRModal] = useState(false);
+  const [selectedPdfUrl, setSelectedPdfUrl] = useState("");
+
   const { isLoggedIn } = useAuth();
   const navigate = useNavigate();
-
   const librosCollection = collection(db, "libros");
 
   const fetchData = async () => {
@@ -222,6 +208,23 @@ const Libros = () => {
     setShowDeleteModal(true);
   };
 
+  const openQRModal = (url) => {
+    setSelectedPdfUrl(url);
+    setShowQRModal(true);
+  };
+
+  const closeQRModal = () => {
+    setSelectedPdfUrl("");
+    setShowQRModal(false);
+  };
+
+  const handleCopy = (libro) => {
+    const text = `Nombre: ${libro.nombre}\nAutor: ${libro.autor}\nGénero: ${libro.genero}\nPDF: ${libro.pdfUrl}`;
+    navigator.clipboard.writeText(text).then(() => {
+      alert("Datos copiados al portapapeles.");
+    });
+  };
+
   const handleSearchChange = (e) => {
     setSearchText(e.target.value.toLowerCase());
   };
@@ -242,18 +245,12 @@ const Libros = () => {
 
   return (
     <Container className="mt-5">
-      <br />
       <h4>Gestión de Libros</h4>
       {error && <Alert variant="danger">{error}</Alert>}
 
-      <Button className="mb-3" onClick={() => setShowModal(true)}>
-        Agregar libro
-      </Button>
+      <Button className="mb-3" onClick={() => setShowModal(true)}>Agregar libro</Button>
 
-      <CuadroBusqueda
-        searchText={searchText}
-        handleSearchChange={handleSearchChange}
-      />
+      <CuadroBusqueda searchText={searchText} handleSearchChange={handleSearchChange} />
 
       <TablaLibros
         libros={paginatedLibros}
@@ -278,6 +275,7 @@ const Libros = () => {
         handlePdfChange={handlePdfChange}
         handleAddLibro={handleAddLibro}
       />
+
       <ModalEdicionLibro
         showEditModal={showEditModal}
         setShowEditModal={setShowEditModal}
@@ -286,6 +284,7 @@ const Libros = () => {
         handleEditPdfChange={handleEditPdfChange}
         handleEditLibro={handleEditLibro}
       />
+
       <ModalEliminacionLibro
         showDeleteModal={showDeleteModal}
         setShowDeleteModal={setShowDeleteModal}
@@ -295,7 +294,7 @@ const Libros = () => {
       <ModalQR
         show={showQRModal}
         handleClose={closeQRModal}
-        url={currentUrl}
+        pdfUrl={selectedPdfUrl}
       />
     </Container>
   );
