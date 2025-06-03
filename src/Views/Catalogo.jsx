@@ -5,6 +5,8 @@ import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
 import TarjetaProducto from "../Components/catalogo/TarjetaProducto";
 import ModalEdicionProducto from "../Components/productos/ModalEdicionProducto";
 import ModalQRProducto from "../Components/catalogo/ModalQRProducto";
+import { useTranslation } from 'react-i18next';
+
 
 const Catalogo = () => {
   const [productos, setProductos] = useState([]);
@@ -105,6 +107,9 @@ const Catalogo = () => {
     categoriaSeleccionada === "Todas"
       ? productos
       : productos.filter((producto) => producto.categoria === categoriaSeleccionada);
+
+  const { t, i18n } = useTranslation();
+    
 
   return (
     <Container className="mt-5">

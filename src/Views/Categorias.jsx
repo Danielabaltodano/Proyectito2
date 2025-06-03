@@ -19,6 +19,8 @@ import ModalEliminacionCategoria from "../Components/categorias/ModalEliminacion
 import CuadroBusqueda from "../Components/Busquedas/Cuadrobusquedas";
 import Paginacion from "../Components/ordenamiento/Paginacion";
 import ChatIA from "../Components/chat/ChatIA";
+import { useTranslation } from 'react-i18next';
+
 
 const Categorias = () => {
   // Estados
@@ -192,6 +194,10 @@ const Categorias = () => {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+  const { t, i18n } = useTranslation();
+
+
 
   return (
     <Container className="mt-5">

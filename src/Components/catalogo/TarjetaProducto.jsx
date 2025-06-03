@@ -1,9 +1,12 @@
 // src/Components/catalogo/TarjetaProducto.jsx
 import React from "react";
 import { Card, Col, Button } from "react-bootstrap";
+import { useTranslation } from 'react-i18next';
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 const TarjetaProducto = ({ producto, openEditModal, openQRModal, handleCopy }) => {
+  const { t } = useTranslation();
+
   return (
     <Col lg={3} md={4} sm={12} className="mb-4">
       <Card className="h-100">
@@ -22,8 +25,8 @@ const TarjetaProducto = ({ producto, openEditModal, openQRModal, handleCopy }) =
         <Card.Body className="d-flex flex-column">
           <Card.Title>{producto.nombre}</Card.Title>
           <Card.Text>
-            Precio: C${producto.precio} <br />
-            Categoría: {producto.categoria}
+            {t('productos.precio')}: C${producto.precio} <br />
+            {t('productos.categoria')}: {producto.categoria}
           </Card.Text>
 
           <div className="d-flex justify-content-between mt-auto">
@@ -31,17 +34,19 @@ const TarjetaProducto = ({ producto, openEditModal, openQRModal, handleCopy }) =
               variant="outline-primary"
               onClick={() => openEditModal(producto)}
             >
-              Editar
+              {t('catalogo.editar')}
             </Button>
             <Button
               variant="outline-dark"
               onClick={() => openQRModal(producto)}
+              title="Generar QR"
             >
               <i className="bi bi-qr-code"></i>
             </Button>
             <Button
               variant="outline-success"
               onClick={() => handleCopy(producto)}
+              title="Copiar"
             >
               <i className="bi bi-clipboard"></i>
             </Button>

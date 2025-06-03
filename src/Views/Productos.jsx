@@ -20,7 +20,8 @@ import Paginacion from "../Components/ordenamiento/Paginacion";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable"; // ← IMPORTACIÓN CORRECTA
 import * as XLSX from "xlsx";
-import { saveAs } from "file-saver";
+import { saveAs } from "file-saver"
+import { useTranslation } from 'react-i18next';
 
 // Componente principal
 const Productos = () => {
@@ -212,8 +213,7 @@ const Productos = () => {
     currentPage * itemsPerPage
   );
 
-
-
+  const { t, i18n } = useTranslation();
 
   const generarPDFProductos = () => {
     const doc = new jsPDF();

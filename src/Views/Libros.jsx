@@ -24,6 +24,7 @@ import ModalQR from "../Components/qr/ModalQR";
 import { useAuth } from "../database/authcontext";
 import CuadroBusqueda from "../Components/Busquedas/Cuadrobusquedas";
 import Paginacion from "../Components/ordenamiento/Paginacion";
+import { useTranslation } from 'react-i18next';
 
 const Libros = () => {
   const [libros, setLibros] = useState([]);
@@ -51,6 +52,8 @@ const Libros = () => {
   const { isLoggedIn } = useAuth();
   const navigate = useNavigate();
   const librosCollection = collection(db, "libros");
+
+  const { t, i18n } = useTranslation();
 
   const fetchData = async () => {
     try {
@@ -245,10 +248,12 @@ const Libros = () => {
 
   return (
     <Container className="mt-5">
-      <h4>Gestión de Libros</h4>
+      <h4>{t('libros.titulo')}</h4>
       {error && <Alert variant="danger">{error}</Alert>}
 
-      <Button className="mb-3" onClick={() => setShowModal(true)}>Agregar libro</Button>
+      <Button className="mb-3" onClick={() => setShowModal(true)}>
+        {t('libros.agregar')}
+      </Button>
 
       <CuadroBusqueda searchText={searchText} handleSearchChange={handleSearchChange} />
 
@@ -301,5 +306,3 @@ const Libros = () => {
 };
 
 export default Libros;
- 
-/// mmm
